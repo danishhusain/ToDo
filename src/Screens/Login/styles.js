@@ -6,15 +6,16 @@ import { moderateScale, moderateScaleVertical } from '../../styles/responsiveSiz
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1, 
-        justifyContent: 'space-between', 
-        marginHorizontal: moderateScale(34)
+        flex: 1,
+        paddingHorizontal: moderateScale(8),
+        paddingVertical: moderateScaleVertical(16),
+
     },
     experienceText: {
         ...commonStyles.fontSize18,
-        fontFamily:fontFamily.medium,
+        fontFamily:fontFamily.bold,
         alignSelf:'center',
-        marginVertical:moderateScaleVertical(16)
+       alignSelf:"flex-start"
     },
     btnStyle: {
         backgroundColor: colors.lighPink, 
@@ -22,10 +23,24 @@ const styles = StyleSheet.create({
         marginTop:moderateScaleVertical(16)
     },
     headerStyle: {
-        alignItems: 'center',
-        paddingHorizontal: 0,
-        marginBottom: moderateScaleVertical(24)
-    }
+        backgroundColor: colors.whiteColor,
+        paddingVertical: moderateScaleVertical(14),
+        paddingHorizontal: moderateScale(16),
+        flex: 1,
+        justifyContent: 'center'
+    },
+    modalView: {
+        backgroundColor: colors.whiteColor,
+        // backgroundColor:'red',
+        paddingVertical: moderateScaleVertical(14),
+        paddingHorizontal: moderateScale(16),
+        flex: 1,
+        justifyContent: 'center'
+
+    },
+    inputText: {
+        marginVertical: 4,
+    },
    
 });
 

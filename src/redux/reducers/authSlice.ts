@@ -8,7 +8,7 @@ interface AuthState { //Each slice file should define a type for its initial sta
 // Define the initial state using that type
 const initialState: AuthState = {
   userData: null,
-  isFirstTime: true,
+  isFirstTime: false,
 }
 
 const authSlice = createSlice({

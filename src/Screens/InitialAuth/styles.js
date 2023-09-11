@@ -1,13 +1,15 @@
-import {  StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import colors from '../../styles/colors';
 import commonStyles from '../../styles/commonStyles';
 import fontFamily from '../../styles/fontFamily';
-import { moderateScale, moderateScaleVertical } from '../../styles/responsiveSize';
+import { moderateScale, moderateScaleVertical, scale } from '../../styles/responsiveSize';
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         paddingHorizontal: moderateScale(8),
-        paddingVertical: moderateScaleVertical(16)
+        paddingVertical: moderateScaleVertical(16),
+
     },
     logoStyle: {
         width: 100,
@@ -25,7 +27,8 @@ const styles = StyleSheet.create({
         paddingVertical: moderateScaleVertical(14),
         paddingHorizontal: moderateScale(16),
         backgroundColor: colors.whiteColor,
-        flex: 1
+        flex: 1,
+        justifyContent: 'center'
     },
     btnStyle: {
         width: '100%',
@@ -41,8 +44,11 @@ const styles = StyleSheet.create({
     headerStyle: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingHorizontal:moderateScale(16)
-    }
+        paddingHorizontal: moderateScale(16)
+    },
+    input: {
+        marginVertical: 4,
+    },
 });
 
 export default styles
