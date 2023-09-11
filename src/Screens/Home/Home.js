@@ -13,7 +13,7 @@ const Home = ({ navigation }) => {
 
   return (
     <View>
-      <Text>Home</Text>
+      <Text>HomeScreen</Text>
       <Button onPress={() => goToScreen(navigationStrings.SEARCH)} title='SEARCH' />
     </View>
   )
