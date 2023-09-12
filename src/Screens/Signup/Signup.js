@@ -1,46 +1,113 @@
-import { Text, View,TouchableOpacity } from 'react-native'
+import { Text, View, TouchableOpacity, Keyboard, ScrollView, KeyboardAvoidingView } from 'react-native'
 import React, { useState } from 'react'
 import styles from './styles'
-import { Button, TextInput,  } from 'react-native-paper'
+import { Button, IconButton, TextInput, } from 'react-native-paper'
 import navigationStrings from '../../constants/navigationStrings'
-import { scale } from '../../styles/responsiveSize'
+import { moderateScale, scale } from '../../styles/responsiveSize'
+import TextInputWithLabel from '../../Components/TextInputWithLabel'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { useDispatch, useSelector } from '../../redux/hooks'
+import { changeFirstTime, } from '../../redux/reducers/authSlice'
+
+
 
 const Signup = ({ navigation }) => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [errors, setErrors] = React.useState({});
+  const [loading, setLoading] = React.useState(false);
+  const [inputs, setInputs] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
+  const dispatchData = useDispatch()
+
+
   const goToScreen = (screen) => {
     navigation.navigate(screen)
   }
   const handleSubmit = () => {
+    Keyboard.dismiss();
+    let isValid = true;
 
-    // console.log("text", name, password, email)
+    if (!inputs.email) {
+      handleError('Please input email', 'email');
+      isValid = false;
+    } else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
+      handleError('Please input a valid email', 'email');
+      isValid = false;
+    }
+
+    if (!inputs.name) {
+      handleError('Please input name', 'name');
+      isValid = false;
+    }
+
+    if (!inputs.password) {
+      handleError('Please input password', 'password');
+      isValid = false;
+    } else if (inputs.password.length < 8) {
+      handleError('Min password length of 8', 'password');
+      isValid = false;
+    }
+    if (isValid) {
+      signinwithemailandpassword();
+    }
+  };
+  const signinwithemailandpassword = () => {
+
+
+    //send signup data to reduxStore
+
+
+
   };
 
+  const handleOnchange = (text, input) => {
+    setInputs(prevState => ({ ...prevState, [input]: text }));
+  };
+  const handleError = (error, input) => {
+    setErrors(prevState => ({ ...prevState, [input]: error }));
+  };
 
   return (
-    <View style={styles.container}>
-      <Text style={{ fontSize: 26, fontWeight: 'bold' }}>Signup</Text>
+    <  KeyboardAvoidingView style={styles.container} enabled={true}>
+      <View>
+        <Text style={{ fontSize: 26, fontWeight: 'bold' }}>SignUp</Text>
+      </View>
+
       <View style={styles.modalView}>
-        <TextInput
-          value={name}
-          onChangeText={name => setName(name)}
-          placeholder='enter name' mode='outlined' style={styles.inputText} />
-        <TextInput
-          value={email}
-          onChangeText={email => setEmail(email)}
-          placeholder='enter email' mode='outlined' style={styles.inputText} />
-        <TextInput
-          value={password}
-          onChangeText={password => setPassword(password)}
-          placeholder='enter password' mode='outlined' style={styles.inputText} />
-        <Button mode='contained' style={{ marginVertical: 16 }} onPress={()=>handleSubmit()}>Login</Button>
-        <View style={[{ top: scale(16), }]}>
+        <TextInputWithLabel
+          onChangeText={text => handleOnchange(text, 'name')}
+          onFocus={() => handleError(null, 'name')}
+          iconName="account-outline"
+          label="Name"
+          placeholder="Enter your name"
+          error={errors.name}
+        />
+        <TextInputWithLabel
+          onChangeText={text => handleOnchange(text, 'email')}
+          onFocus={() => handleError(null, 'email')}
+          iconName="email-outline"
+          label="Email"
+          placeholder="Enter your email address"
+          error={errors.email}
+        />
+        <TextInputWithLabel
+          onChangeText={text => handleOnchange(text, 'password')}
+          onFocus={() => handleError(null, 'password')}
+          iconName="lock-outline"
+          label="Password"
+          placeholder="Enter your password"
+          error={errors.password}
+          password
+        />
+        <Button mode='contained' style={{ marginVertical: 16 }} onPress={() => handleSubmit()}>SignUp</Button>
+        <View style={[{ top: scale(16) }]}>
           <Text>Already a member?</Text>
-          <TouchableOpacity ><Text style={styles.experienceText} onPress={() => goToScreen(navigationStrings.LOGIN)}>Log In</Text></TouchableOpacity>
+          <TouchableOpacity style={{ alignSelf: 'flex-start', paddingVertical: 8 }}><Text style={styles.experienceText} onPress={() => goToScreen(navigationStrings.LOGIN)}>LogIn</Text></TouchableOpacity>
         </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   )
 }
 

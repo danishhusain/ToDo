@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import colors from '../../styles/colors';
 import commonStyles from '../../styles/commonStyles';
 import fontFamily from '../../styles/fontFamily';
@@ -8,20 +8,21 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: moderateScale(8),
-        paddingVertical: moderateScaleVertical(16),
+        // paddingVertical: moderateScaleVertical(16),
+        justifyContent:'center',
 
     },
     experienceText: {
         ...commonStyles.fontSize18,
-        fontFamily:fontFamily.medium,
-        alignSelf:'center',
-       alignSelf:"flex-start"
+        fontFamily: fontFamily.medium,
+        alignSelf: 'center',
+        alignSelf: "flex-start"
 
     },
     btnStyle: {
-        backgroundColor: colors.lighPink, 
-        alignSelf: 'center' ,
-        marginTop:moderateScaleVertical(16)
+        backgroundColor: colors.lighPink,
+        alignSelf: 'center',
+        marginTop: moderateScaleVertical(16)
     },
     headerStyle: {
         alignItems: 'center',
@@ -40,13 +41,13 @@ const styles = StyleSheet.create({
         paddingVertical: moderateScaleVertical(14),
         paddingHorizontal: moderateScale(16),
         flex: 1,
-        justifyContent: 'center'
+        justifyContent: 'center',
 
     },
     inputText: {
         marginVertical: 4,
     },
-   
+
 });
 
 export default styles

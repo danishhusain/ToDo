@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface AuthState { //Each slice file should define a type for its initial state value, so that createSlice can correctly infer the type of state in each case reducer.
-  userData: null,
+  userData: any,
   isFirstTime: boolean,
 }
 

@@ -1,62 +1,100 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, Keyboard, KeyboardAvoidingView } from 'react-native'
 import React, { useState } from 'react'
 import { Button, TextInput } from 'react-native-paper'
 import styles from './styles'
 import { scale } from '../../styles/responsiveSize'
 import navigationStrings from '../../constants/navigationStrings'
 import validations from '../../utils/validations'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import TextInputWithLabel from '../../Components/TextInputWithLabel'
+import Loader from '../../Components/Loader'
 
 const Login = ({ navigation }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState('');
+  const [inputs, setInputs] = React.useState({ email: '', password: '' });
+  const [errors, setErrors] = React.useState({});
+  const [loading, setLoading] = React.useState(false);
 
   const goToScreen = (screen) => {
     navigation.navigate(screen)
   }
   //validation
   const handleSubmit = () => {
+    Keyboard.dismiss();
+    let isValid = true;
 
-    //   if (!email.includes('@gmail.com' && password.length < 8)) {
-    //     setErrorMessage('Please enter a valid email address');
-    //   } else if (password.length < 8) {
-    //     setErrorMessage('Password must be at least 8 characters');
-    //   } else {
-    //     setErrorMessage('');
-    //     // submit form data
-    //     // setShowLoader(true)
-    //     // login(email, password);
-    //   }
+    if (!inputs.email) {
+      handleError('Please input email', 'email');
+      isValid = false;
+    } else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
+      handleError('Please input a valid email', 'email');
+      isValid = false;
+    }
+    if (!inputs.password) {
+      handleError('Please input password', 'password');
+      isValid = false;
+    }
+    if (isValid) {
+      login();
+    }
+  };
+
+  // LogIn with Email & Passward
+  const login = async () => {
+    // try {
+    //   await auth().signInWithEmailAndPassword(inputs.email, inputs.password);
+    //   console.log('login  sucessfully ');
+    //   // console.log("Login data", inputs.email, inputs.password)
+
+    // } catch (e) {
+    //   console.log('Please make account', e);
+    // }
 
   };
 
-  // console.log(">", email, password)
-  return (
-    <View style={styles.container}>
-      <Text style={{ fontSize: 26, fontWeight: 'bold' }}>Login</Text>
-      <View style={styles.modalView}>
-        <TextInput
-          value={email}
-          onChangeText={email => setEmail(email)}
-          placeholder='enter email' mode='outlined' style={styles.inputText} focusable={true} keyboardType="email-address" autoComplete="email" error={false} />
-        {/* {errorMessage ? <Text>{errorMessage}</Text> : null} */}
-        <TextInput
-          value={password}
-          onChangeText={password => setPassword(password)}
-          placeholder='enter password' mode='outlined' style={styles.inputText} />
-        {/* {errorMessage ? <Text>{errorMessage}</Text> : null} */}
+  const handleOnchange = (text, input) => {
+    setInputs(prevState => ({ ...prevState, [input]: text }));
+  };
 
+  const handleError = (error, input) => {
+    setErrors(prevState => ({ ...prevState, [input]: error }));
+  };
+
+
+
+
+  return (
+    <KeyboardAvoidingView style={styles.container}>
+      <Text style={{ fontSize: 26, fontWeight: 'bold' }}>LogIn</Text>
+      <View style={styles.modalView}>
+
+        <TextInputWithLabel
+          onChangeText={text => handleOnchange(text, 'email')}
+          onFocus={() => handleError(null, 'email')}
+          iconName="email-outline"
+          label="Email"
+          placeholder="Enter your email address"
+          error={errors.email}
+        />
+        <TextInputWithLabel
+          onChangeText={text => handleOnchange(text, 'password')}
+          onFocus={() => handleError(null, 'password')}
+          iconName="lock-outline"
+          label="Password"
+          placeholder="Enter your password"
+          error={errors.password}
+          password
+        />
         <View style={{ alignItems: 'flex-end', }}>
           <TouchableOpacity onPress={() => goToScreen(navigationStrings.FORGOT_PASSWORD)}><Text  >reset passward</Text></TouchableOpacity>
         </View>
-        <Button mode='contained' style={{ marginVertical: 16 }} onPress={() =>handleSubmit()}>Login</Button>
+        <Button mode='contained' style={{ marginVertical: 16 }} onPress={() => handleSubmit()}>Login</Button>
         <View style={[{ top: scale(16), }]}>
           <Text>New member?</Text>
-          <TouchableOpacity  ><Text style={styles.experienceText} onPress={() => goToScreen(navigationStrings.SIGNUP)}>Sign Up</Text></TouchableOpacity>
+          <TouchableOpacity style={{ alignSelf: 'flex-start', }}><Text style={styles.experienceText} onPress={() => goToScreen(navigationStrings.SIGNUP)}>Sign Up</Text></TouchableOpacity>
         </View>
       </View>
 
-    </View>
+    </KeyboardAvoidingView>
   )
 }
 
