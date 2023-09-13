@@ -7,61 +7,60 @@ import { moderateScale, scale } from '../../styles/responsiveSize'
 import TextInputWithLabel from '../../Components/TextInputWithLabel'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useDispatch, useSelector } from '../../redux/hooks'
-import { changeFirstTime, } from '../../redux/reducers/authSlice'
+import { createUser } from '../../redux/reducers/authThunks'
+import validateData from '../../utils/validations'
+
 
 
 
 const Signup = ({ navigation }) => {
-  const [errors, setErrors] = React.useState({});
-  const [loading, setLoading] = React.useState(false);
+  const [errors, setErrors] = useState({});
   const [inputs, setInputs] = useState({
     name: '',
     email: '',
     password: '',
   });
-  const dispatchData = useDispatch()
 
+  const dispatch = useDispatch()
 
   const goToScreen = (screen) => {
     navigation.navigate(screen)
   }
   const handleSubmit = () => {
-    Keyboard.dismiss();
-    let isValid = true;
+    // Keyboard.dismiss();
+    // let isValid = true;
 
-    if (!inputs.email) {
-      handleError('Please input email', 'email');
-      isValid = false;
-    } else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
-      handleError('Please input a valid email', 'email');
-      isValid = false;
-    }
+    // if (!inputs.email) {
+    //   handleError('Please input email', 'email');
+    //   isValid = false;
+    // } else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
+    //   handleError('Please input a valid email', 'email');
+    //   isValid = false;
+    // }
 
-    if (!inputs.name) {
-      handleError('Please input name', 'name');
-      isValid = false;
-    }
+    // if (!inputs.name) {
+    //   handleError('Please input name', 'name');
+    //   isValid = false;
+    // }
 
-    if (!inputs.password) {
-      handleError('Please input password', 'password');
-      isValid = false;
-    } else if (inputs.password.length < 8) {
-      handleError('Min password length of 8', 'password');
-      isValid = false;
-    }
-    if (isValid) {
-      signinwithemailandpassword();
-    }
+    // if (!inputs.password) {
+    //   handleError('Please input password', 'password');
+    //   isValid = false;
+    // } else if (inputs.password.length < 8) {
+    //   handleError('Min password length of 8', 'password');
+    //   isValid = false;
+    // }
+    // if (isValid) {
+    //   signinwithemailandpassword();
+    // }
+    validateData({name:inputs.name,email:inputs.email,password:inputs.password})
   };
-  const signinwithemailandpassword = () => {
 
-
+  const signinwithemailandpassword = async () => {
     //send signup data to reduxStore
-
-
+    dispatch(createUser(inputs.email, inputs.password))
 
   };
-
   const handleOnchange = (text, input) => {
     setInputs(prevState => ({ ...prevState, [input]: text }));
   };
@@ -70,7 +69,7 @@ const Signup = ({ navigation }) => {
   };
 
   return (
-    <  KeyboardAvoidingView style={styles.container} enabled={true}>
+    <KeyboardAvoidingView style={styles.container} enabled={true}>
       <View>
         <Text style={{ fontSize: 26, fontWeight: 'bold' }}>SignUp</Text>
       </View>

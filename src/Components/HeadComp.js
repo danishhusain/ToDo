@@ -6,7 +6,7 @@ import {
     StyleSheet,
     TouchableOpacity,
 } from 'react-native';
-import { moderateScale } from '../styles/responsiveSize';
+import { moderateScale, textScale } from '../styles/responsiveSize';
 import fontFamily from '../styles/fontFamily';
 import colors from '../styles/colors';
 
@@ -24,16 +24,19 @@ const HeaderComp = (props) => {
 
 const styles = StyleSheet.create({
     headerStyle: {
-        minHeight: moderateScale(48),
+        minHeight: moderateScale(52),
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: moderateScale(16),
+        alignItems:'center'
     },
     textStyle: {
-        fontSize: 18,
+        fontSize: textScale(26),
         fontFamily: fontFamily.medium,
         color: colors.theme,
         textTransform: 'uppercase',
+        fontWeight:'bold'
+
     },
 });
 

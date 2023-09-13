@@ -4,15 +4,16 @@ import { Button, TextInput } from 'react-native-paper'
 import styles from './styles'
 import { scale } from '../../styles/responsiveSize'
 import navigationStrings from '../../constants/navigationStrings'
-import validations from '../../utils/validations'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import TextInputWithLabel from '../../Components/TextInputWithLabel'
-import Loader from '../../Components/Loader'
+import { useDispatch } from '../../redux/hooks'
+import { logInUser } from '../../redux/reducers/authThunks'
+import auth from '@react-native-firebase/auth';
 
 const Login = ({ navigation }) => {
   const [inputs, setInputs] = React.useState({ email: '', password: '' });
   const [errors, setErrors] = React.useState({});
-  const [loading, setLoading] = React.useState(false);
+  const dispatch = useDispatch()
+
 
   const goToScreen = (screen) => {
     navigation.navigate(screen)
@@ -28,11 +29,16 @@ const Login = ({ navigation }) => {
     } else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
       handleError('Please input a valid email', 'email');
       isValid = false;
+    } else if (!inputs.email.includes("@gmail.com")) {
+      handleError('Please input @gmail.com', 'email');
     }
     if (!inputs.password) {
       handleError('Please input password', 'password');
       isValid = false;
-    }
+    } else if (inputs.password.length < 8) {
+      handleError('Min password length of 8', 'password');
+      isValid = false;
+  }
     if (isValid) {
       login();
     }
@@ -48,7 +54,7 @@ const Login = ({ navigation }) => {
     // } catch (e) {
     //   console.log('Please make account', e);
     // }
-
+    dispatch(logInUser(inputs.email, inputs.password))
   };
 
   const handleOnchange = (text, input) => {
@@ -58,6 +64,11 @@ const Login = ({ navigation }) => {
   const handleError = (error, input) => {
     setErrors(prevState => ({ ...prevState, [input]: error }));
   };
+  const resetpassword = () => {
+    const reset = auth().currentUser.email
+    // dispatch(resetEmailVerification(reset))
+    // console.log('reset password', reset)
+  }
 
 
 
@@ -85,7 +96,9 @@ const Login = ({ navigation }) => {
           password
         />
         <View style={{ alignItems: 'flex-end', }}>
-          <TouchableOpacity onPress={() => goToScreen(navigationStrings.FORGOT_PASSWORD)}><Text  >reset passward</Text></TouchableOpacity>
+          <TouchableOpacity onPress={() => goToScreen(navigationStrings.FORGOT_PASSWORD)}>
+            <Text >reset passward</Text>
+          </TouchableOpacity>
         </View>
         <Button mode='contained' style={{ marginVertical: 16 }} onPress={() => handleSubmit()}>Login</Button>
         <View style={[{ top: scale(16), }]}>
