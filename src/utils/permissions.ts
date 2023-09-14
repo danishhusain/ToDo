@@ -21,7 +21,7 @@
 //                         'Alert',
 //                         "Don't have permission to open camera",
 //                         [{ text: 'Okay' }],
-//                         { cancelable: true }​​​​​​​​,
+//                         // { cancelable: true }​​​​​​​​,
 //                     );
 //                     return resolve(false);
 //                     // alert(strings.DO_NOT_HAVE_PERMISSIONS_TO_SELECT_IMAGE);

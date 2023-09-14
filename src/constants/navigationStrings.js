@@ -15,5 +15,6 @@ export default {
     BOOK_SELECTIONS:"bookSelections",
     ANIMATION:"animation",
     TestScreen:"testscreen",
-    ADDTASKCOMPO:"AddTaskCompo"
+    ADD_TASK_COMPO:"AddTaskCompo",
+    Animated_FAB_Compo:"AnimatedFABCompo"
 }

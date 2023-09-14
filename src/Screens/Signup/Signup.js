@@ -8,7 +8,6 @@ import TextInputWithLabel from '../../Components/TextInputWithLabel'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useDispatch, useSelector } from '../../redux/hooks'
 import { createUser } from '../../redux/reducers/authThunks'
-import validateData from '../../utils/validations'
 
 
 
@@ -27,33 +26,32 @@ const Signup = ({ navigation }) => {
     navigation.navigate(screen)
   }
   const handleSubmit = () => {
-    // Keyboard.dismiss();
-    // let isValid = true;
+    Keyboard.dismiss();
+    let isValid = true;
 
-    // if (!inputs.email) {
-    //   handleError('Please input email', 'email');
-    //   isValid = false;
-    // } else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
-    //   handleError('Please input a valid email', 'email');
-    //   isValid = false;
-    // }
+    if (!inputs.email) {
+      handleError('Please input email', 'email');
+      isValid = false;
+    } else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
+      handleError('Please input a valid email', 'email');
+      isValid = false;
+    }
 
-    // if (!inputs.name) {
-    //   handleError('Please input name', 'name');
-    //   isValid = false;
-    // }
+    if (!inputs.name) {
+      handleError('Please input name', 'name');
+      isValid = false;
+    }
 
-    // if (!inputs.password) {
-    //   handleError('Please input password', 'password');
-    //   isValid = false;
-    // } else if (inputs.password.length < 8) {
-    //   handleError('Min password length of 8', 'password');
-    //   isValid = false;
-    // }
-    // if (isValid) {
-    //   signinwithemailandpassword();
-    // }
-    validateData({name:inputs.name,email:inputs.email,password:inputs.password})
+    if (!inputs.password) {
+      handleError('Please input password', 'password');
+      isValid = false;
+    } else if (inputs.password.length < 8) {
+      handleError('Min password length of 8', 'password');
+      isValid = false;
+    }
+    if (isValid) {
+      signinwithemailandpassword();
+    }
   };
 
   const signinwithemailandpassword = async () => {

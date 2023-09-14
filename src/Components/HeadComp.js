@@ -11,12 +11,12 @@ import fontFamily from '../styles/fontFamily';
 import colors from '../styles/colors';
 
 const HeaderComp = (props) => {
-    const { leftText, onPressRight, headerStyle } = props;
+    const { leftText, onPressRight, headerStyle ,rightText,righttextStyle} = props;
     return (
         <View style={{ ...styles.headerStyle, ...headerStyle }}>
             <Text style={styles.textStyle}>{leftText}</Text>
             <TouchableOpacity onPress={onPressRight}>
-                <Text>Image</Text>
+                <Text style={{...styles.righttextStyle,...righttextStyle}}>{rightText}</Text>
             </TouchableOpacity>
         </View>
     );
@@ -36,6 +36,12 @@ const styles = StyleSheet.create({
         color: colors.theme,
         textTransform: 'uppercase',
         fontWeight:'bold'
+
+    },
+    righttextStyle: {
+        fontSize: textScale(16),
+        fontFamily: fontFamily.medium,
+        color: colors.darkBlue,
 
     },
 });

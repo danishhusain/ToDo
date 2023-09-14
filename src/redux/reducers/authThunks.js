@@ -3,6 +3,7 @@
 import auth from '@react-native-firebase/auth';
 import { setError, setLoading, setUser } from './authSlice';
 import { showError, showSuccess } from '../../utils/helperFunctions';
+import { setItem } from '../../utils/utils';
 
 // const dispatch = useDispatch()
 
@@ -13,6 +14,8 @@ export const createUser = (email, password) => async (dispatch) => {
     dispatch(setLoading(true));
     const userCredential = auth().createUserWithEmailAndPassword(email, password);
     const user = (await userCredential).user;
+    // {user? setItem("USER",user.metadata):null}
+
     dispatch(setUser(user));
     dispatch(setLoading(false));
     showSuccess("account created successfully")

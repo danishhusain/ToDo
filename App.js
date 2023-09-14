@@ -27,6 +27,7 @@ const App = () => {
             position='top'
           />
           {/* <FlashMessage position="top" /> */}
+          
 
         </SafeAreaProvider >
       </PaperProvider>

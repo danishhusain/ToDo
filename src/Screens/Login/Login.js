@@ -7,7 +7,6 @@ import navigationStrings from '../../constants/navigationStrings'
 import TextInputWithLabel from '../../Components/TextInputWithLabel'
 import { useDispatch } from '../../redux/hooks'
 import { logInUser } from '../../redux/reducers/authThunks'
-import auth from '@react-native-firebase/auth';
 
 const Login = ({ navigation }) => {
   const [inputs, setInputs] = React.useState({ email: '', password: '' });
@@ -46,14 +45,6 @@ const Login = ({ navigation }) => {
 
   // LogIn with Email & Passward
   const login = async () => {
-    // try {
-    //   await auth().signInWithEmailAndPassword(inputs.email, inputs.password);
-    //   console.log('login  sucessfully ');
-    //   // console.log("Login data", inputs.email, inputs.password)
-
-    // } catch (e) {
-    //   console.log('Please make account', e);
-    // }
     dispatch(logInUser(inputs.email, inputs.password))
   };
 
@@ -64,11 +55,7 @@ const Login = ({ navigation }) => {
   const handleError = (error, input) => {
     setErrors(prevState => ({ ...prevState, [input]: error }));
   };
-  const resetpassword = () => {
-    const reset = auth().currentUser.email
-    // dispatch(resetEmailVerification(reset))
-    // console.log('reset password', reset)
-  }
+ 
 
 
 

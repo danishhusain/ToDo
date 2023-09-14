@@ -55,7 +55,7 @@ const AnimatedFABCompo = ({
         icon={'plus'}
         label={'Note'}
         extended={isExtended}
-        onPress={() => goToScreen(navigationStrings.ADDTASKCOMPO)}
+        onPress={() => goToScreen(navigationStrings.ADD_TASK_COMPO)}
         visible={visible}
         animateFrom={'right'}
         // iconMode={'static'}

@@ -104,14 +104,15 @@ export function apiPut(props: ApiProps) {
 
 
 export function setItem(key:string, data:any) {
-	data = JSON.stringify(data);
+	// data = JSON.stringify(data);
 	return AsyncStorage.setItem(key, data);
 }
 
 export function getItem(key:string) {
 	return new Promise((resolve, reject) => {
 		AsyncStorage.getItem(key).then((data:any) => {
-			resolve(JSON.parse(data));
+			// resolve(JSON.parse(data));
+			resolve(data);
 		});
 	});
 }
