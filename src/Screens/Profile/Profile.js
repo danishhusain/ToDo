@@ -1,5 +1,6 @@
-import { View, Text } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import NoDataFound from '../../Components/NoDataFound'
 
 const Profile = () => {
   return (
@@ -10,3 +11,5 @@ const Profile = () => {
 }
 
 export default Profile
+
+const styles = StyleSheet.create({})

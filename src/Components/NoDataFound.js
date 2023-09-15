@@ -7,7 +7,7 @@ const NoDataFound = (props) => {
     // const { text = strings.NO_DATA_FOUND, containerStyle, textStyle } = props;
     const { text = "NO_DATA_FOUND", containerStyle, textStyle } = props;
     return (
-        <View style={{ ...(containerStyle || {}),  }}>
+        <View style={{ ...(containerStyle || { flex: 1 }), }}>
             <Text style={{ ...styles.textStyle, ...(textStyle || {}) }}>{text}</Text>
         </View>
     );
@@ -21,7 +21,9 @@ const styles = StyleSheet.create({
     },
     textStyle: {
         fontSize: textScale(17),
-        color: colors.blackOpacity25
+        color: colors.blackOpacity25,
+        justifyContent: 'center',
+        alignSelf: 'center',
     }
 });
 

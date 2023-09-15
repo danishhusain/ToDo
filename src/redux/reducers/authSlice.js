@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { setItem } from '../../utils/utils';
 
 const authSlice = createSlice({
   name: 'auth',
@@ -11,7 +10,6 @@ const authSlice = createSlice({
   reducers: {
     setUser: (state, action) => {
       state.user = action.payload;
-      // {user? setItem("USER",user):null}
 
     },
     setLoading: (state, action) => {

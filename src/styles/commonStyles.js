@@ -32,7 +32,7 @@ export default StyleSheet.create({
 
   fontSize13: {
     fontSize: textScale(13),
-    color: colors.black,
+    // color: colors.black,
     fontFamily: fontFamily.regular,
   },
 
@@ -52,6 +52,7 @@ export default StyleSheet.create({
     fontSize: textScale(16),
     color: colors.black,
     fontFamily: fontFamily.regular,
+
   },
   fontSize17: {
     fontSize: textScale(17),
@@ -88,6 +89,8 @@ export default StyleSheet.create({
     fontSize: textScale(18),
     color: colors.black,
     fontFamily: fontFamily.bold,
+    fontWeight:'bold'
+
   },
   fontBold24: {
     fontSize: textScale(24),

@@ -54,7 +54,7 @@ const TabRoutes = (props) => {
         }}
       />
 
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name={navigationStrings.SEARCH}
         component={Search}
         options={{
@@ -68,9 +68,9 @@ const TabRoutes = (props) => {
             );
           },
         }}
-      />
+      /> */}
 
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name={navigationStrings.PROFILE}
         component={Profile}
         options={{
@@ -87,7 +87,7 @@ const TabRoutes = (props) => {
 
           },
         }}
-      />
+      /> */}
       <BottomTab.Screen
         name={navigationStrings.TestScreen}
         component={TestScreen}

@@ -3,9 +3,7 @@
 import auth from '@react-native-firebase/auth';
 import { setError, setLoading, setUser } from './authSlice';
 import { showError, showSuccess } from '../../utils/helperFunctions';
-import { setItem } from '../../utils/utils';
 
-// const dispatch = useDispatch()
 
 // Create User Thunk
 export const createUser = (email, password) => async (dispatch) => {
@@ -62,7 +60,6 @@ export const listenToAuthChanges = () => (dispatch) => {
 export const logout = () => (dispatch) => {
   try {
     auth().signOut();
-    // console.log('logOut Succesfully');
     dispatch(setUser(null));
     showSuccess("logout successfully")
 

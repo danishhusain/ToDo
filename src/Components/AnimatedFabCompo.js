@@ -4,6 +4,7 @@ import {
   ViewStyle,
   Animated,
   StyleSheet,
+  View,
   Platform,
   ScrollView,
   Text,
@@ -13,6 +14,8 @@ import {
 import { AnimatedFAB } from 'react-native-paper';
 import navigationStrings from '../constants/navigationStrings';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector } from '../redux/hooks';
+import ListCompo from './ListCompo';
 
 const AnimatedFABCompo = ({
   animatedValue,
@@ -25,6 +28,8 @@ const AnimatedFABCompo = ({
 
 }) => {
   const [isExtended, setIsExtended] = React.useState(true);
+  const NotesData = useSelector((state) => state.notesSlice.titleDiscriptionDataState)
+  // console.log(">>", NotesData)
 
   const goToScreen = (screen) => {
     navigation.navigate(screen)
@@ -42,14 +47,17 @@ const AnimatedFABCompo = ({
 
   const fabStyle = { [animateFrom]: 16 };
 
+
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView onScroll={onScroll}
+      <ScrollView
+        onScroll={onScroll}
         showsVerticalScrollIndicator={false}
+
       >
-        {[...new Array(100).keys()].map((_, i) => (
-          <Text>{i}</Text>
-        ))}
+
+        <ListCompo />
+
       </ScrollView>
       <AnimatedFAB
         icon={'plus'}

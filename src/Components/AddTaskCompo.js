@@ -8,32 +8,44 @@ import colors from "../styles/colors";
 import { moderateScale, scale, verticalScale } from "../styles/responsiveSize";
 import { showError, showSuccess } from "../utils/helperFunctions";
 import { useDispatch, useSelector } from "../redux/hooks";
-import { descriptionData, titleData, titleDiscriptionData, } from "../redux/reducers/notesSlice";
+import { descriptionData, titleData, titleDiscriptionData, updateMethod, } from "../redux/reducers/notesSlice";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 
 const handleHead = ({ tintColor }) => <Text style={{ color: tintColor }}>H1</Text>
-const AddTaskCompo = () => {
+const AddTaskCompo = ({ route }) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [showDescError, setShowDescError] = useState(false);
+    const [indexToUpdate, setIndexToUpdate] = useState('');
+
     const dispatch = useDispatch()
-    const count = useSelector((state) => state.notesSlice.titleDiscriptionDataState)
-    console.log(">>", count)
+    const notesData = useSelector((state) => state.notesSlice.titleDiscriptionDataState)
 
+    const navigation = useNavigation()
     const richText = React.useRef();
+    const index = route.params;
 
-    const richTextHandle = (descriptionText) => {
-        if (descriptionText) {
-            setShowDescError(false);
-            setDescription(descriptionText);
+
+    //convert index Obj to String 
+    useEffect(() => {
+        if (index) {
+            const indexString = Object.values(index).toString()
+            setIndexToUpdate(indexString)
+
+            const setTitleFetchedData = notesData[indexString].titleObj
+            const setDescriptionFetchedData = notesData[indexString].descriptionObj
+            setTitle(setTitleFetchedData,)
+            setDescription(setDescriptionFetchedData,)
+
         } else {
-            setShowDescError(true);
-            setDescription("");
+            console.log("nodata")
         }
+    }, [index])
 
-    };
 
     const submitContentHandle = () => {
+
         //validate description
         const replaceHTMLDescription = description.replace(/<(.|\n)*?>/g, "").trim();
         const replaceWhiteSpaceDescription = replaceHTMLDescription.replace(/&nbsp;/g, "").trim();
@@ -48,12 +60,29 @@ const AddTaskCompo = () => {
         } else if (replaceWhiteSpaceTitle.length <= 0) {
             showError(`please input 🤔 Title`)
         } else {
-            // send data to your server!
-            dispatch(titleDiscriptionData({ titleObj: replaceHTMLTitle, descriptionObj: replaceHTMLDescription }))
+            {
+                indexToUpdate ? dispatch(updateMethod({ index: indexToUpdate, titleObj: replaceHTMLTitle, descriptionObj: replaceHTMLDescription }))
+                    :
+                    dispatch(titleDiscriptionData({ titleObj: replaceHTMLTitle, descriptionObj: replaceHTMLDescription }))
+
+            }
+            navigation.goBack()
+
+        }
+    };
+
+
+    const richTextHandle = (descriptionText) => {
+        if (descriptionText) {
+            setShowDescError(false);
+            setDescription(descriptionText);
+        } else {
+            setShowDescError(true);
+            setDescription("");
         }
 
-
     };
+
 
     //pick image from file
     const picImage = () => {
@@ -76,6 +105,7 @@ const AddTaskCompo = () => {
             .catch(err => console.log(err));
 
     }
+
 
 
 
@@ -113,10 +143,10 @@ const AddTaskCompo = () => {
                         onChange={descriptionText =>
                             richTextHandle(descriptionText)
                         }
+                        initialContentHTML={description}
                         placeholder='description'
                         initialFocus={true}
                         initialHeight={scale(600)}
-
 
                         editorStyle={{
                             flex: 1,

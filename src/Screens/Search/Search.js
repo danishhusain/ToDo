@@ -1,16 +1,16 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { getItem } from '../../utils/utils'
+import { useRoute } from '@react-navigation/native';
 
-const Search = () => {
-  console.log(getItem("USER"))
+export default function Search() {
+  // const { route } = useRoute();
+  // const { itemId, otherParam } = route.params
+  // console.log(itemId)
   return (
     <View>
       <Text>Search</Text>
     </View>
   )
 }
-
-export default Search
 
 const styles = StyleSheet.create({})

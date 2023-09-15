@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
         // backgroundColor:'red',
         // paddingVertical: moderateScaleVertical(14),
         paddingHorizontal: moderateScale(8),
-        // flex: 1,
+        flex: 1,
         justifyContent: 'center'
 
     },
